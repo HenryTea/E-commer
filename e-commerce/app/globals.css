@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* You can add your global styles below */
+body {
+  font-family: 'Inter', 'Helvetica', 'Arial', sans-serif;
+}
