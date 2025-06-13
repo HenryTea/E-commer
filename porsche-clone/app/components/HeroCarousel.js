@@ -66,7 +66,7 @@ const HeroCarousel = () => {
             priority={index === 0}
           />
           {/* Overlay for darkening */}
-          <div className="absolute inset-0 bg-opacity-40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
           {/* Text Content in Bottom Left */}
           <div className="absolute bottom-16 left-16 flex flex-col items-start z-10 group">
             <h1 className="text-5xl font-bold mb-2 text-white flex items-center transition-colors duration-200 group-hover:text-red-600">

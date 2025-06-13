@@ -40,11 +40,11 @@ export default function Home() {
             {carModels.map((model) => (
               <div
                 key={model.name}
-                className="car-model-container rounded-lg overflow-hidden group relative cursor-pointer h-64 group-hover:bg-black"
+                className="car-model-container rounded-lg overflow-hidden group relative cursor-pointer h-64 hover:bg-black"
                 style={{ backgroundImage: `url(${model.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
               >
                 {/* Overlay to darken on hover */}
-                <div className="absolute inset-0 group-hover:bg- black bg-opacity-50 transition-all duration-300 z-0" />
+                <div className="absolute inset-0 transition-all duration-300 z-0  group-hover:bg-black/50" />
                 {/* Name and arrow: bottom left by default, move to top left on hover */}
                 <div
                   className="absolute left-4 flex items-center z-10 transition-all duration-500 bottom-6 group-hover:top-4 group-hover:bottom-auto"
