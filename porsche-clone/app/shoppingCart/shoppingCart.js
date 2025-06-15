@@ -1,17 +1,26 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
-import { Trash2, Heart, Plus, Minus, ShoppingCart as CartIcon } from "lucide-react";
+import {
+  Trash2,
+  Heart,
+  Plus,
+  Minus,
+  ShoppingCart as CartIcon,
+  ArrowLeft,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ShoppingCart = () => {
+  const router = useRouter();
+
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
       shopName: "Porsche Center Saigon",
       productName: "Porsche 911 Carrera",
       variant: "Carrera S",
-      originalPrice: 8870000000,
-      discountPrice: 8870000000,
+      price: 8870000000,
       quantity: 1,
       image: "/images/992.jpeg",
       voucher: "Miễn phí bảo dưỡng 3 năm",
@@ -23,8 +32,7 @@ const ShoppingCart = () => {
       shopName: "Porsche Center Hanoi",
       productName: "Porsche 718 Cayman",
       variant: "Cayman S",
-      originalPrice: 3850000000,
-      discountPrice: 3850000000,
+      price: 3850000000,
       quantity: 1,
       image: "/images/718.jpg",
       voucher: "Miễn phí bảo dưỡng 3 năm",
@@ -34,7 +42,6 @@ const ShoppingCart = () => {
   ]);
 
   const [selectAll, setSelectAll] = useState(false);
-  const [shopeeXu, setShopeeXu] = useState(200);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat("vi-VN").format(price);
@@ -70,38 +77,36 @@ const ShoppingCart = () => {
     setCartItems((items) => items.filter((item) => item.id !== id));
   };
 
+  const handleBackToHome = () => {
+    router.push("/");
+  };
+
   const selectedItems = cartItems.filter((item) => item.selected);
   const totalAmount = selectedItems.reduce(
-    (sum, item) => sum + item.discountPrice * item.quantity,
-    0
-  );
-  const totalSavings = selectedItems.reduce(
-    (sum, item) =>
-      sum + (item.originalPrice - item.discountPrice) * item.quantity,
+    (sum, item) => sum + item.price * item.quantity,
     0
   );
 
   return (
     <div className="max-w-6xl mx-auto bg-white min-h-screen p-4">
-      {/* Header */}
+      {/* Header with Back Button */}
       <div className="bg-white rounded-lg shadow-sm mb-4 p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <CartIcon className="w-6 h-6 text-red-600" />
-            <h1 className="text-xl font-semibold">Giỏ Hàng</h1>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={handleBackToHome}
+              className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              <span>Quay lại trang chính</span>
+            </button>
+            <div className="flex items-center space-x-2">
+              <CartIcon className="w-6 h-6 text-red-600" />
+              <h1 className="text-xl font-semibold">Giỏ Hàng</h1>
+            </div>
           </div>
-          <div className="text-red-600 font-medium">
-            MIỄN PHÍ BẢO DƯỠNG 3 NĂM
-          </div>
+          <div className="text-red-600 font-medium">PORSCHE VIETNAM</div>
         </div>
-      </div>
-
-      {/* Shipping notice */}
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-4 flex items-center">
-        <div className="w-4 h-4 bg-red-600 rounded-full mr-3 flex-shrink-0"></div>
-        <span className="text-gray-700 text-sm">
-          Nhấn vào mục Mã giảm giá ở cuối trang để hưởng ưu đãi đặc biệt!
-        </span>
       </div>
 
       {/* Cart header */}
@@ -180,11 +185,8 @@ const ShoppingCart = () => {
               </div>
 
               <div className="col-span-2 text-center">
-                <div className="text-gray-400 text-sm line-through">
-                  ₫{formatPrice(item.originalPrice)}
-                </div>
                 <div className="text-red-600 font-medium">
-                  ₫{formatPrice(item.discountPrice)}
+                  ₫{formatPrice(item.price)}
                 </div>
               </div>
 
@@ -192,7 +194,7 @@ const ShoppingCart = () => {
                 <div className="flex items-center justify-center space-x-2">
                   <button
                     onClick={() => handleQuantityChange(item.id, -1)}
-                    className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100"
+                    className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
                     disabled={item.quantity <= 1}
                   >
                     <Minus className="w-4 h-4" />
@@ -202,7 +204,7 @@ const ShoppingCart = () => {
                   </span>
                   <button
                     onClick={() => handleQuantityChange(item.id, 1)}
-                    className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100"
+                    className="w-8 h-8 border border-gray-300 rounded flex items-center justify-center hover:bg-gray-100 transition-colors duration-200"
                   >
                     <Plus className="w-4 h-4" />
                   </button>
@@ -211,7 +213,7 @@ const ShoppingCart = () => {
 
               <div className="col-span-1 text-center">
                 <div className="text-red-600 font-medium">
-                  ₫{formatPrice(item.discountPrice * item.quantity)}
+                  ₫{formatPrice(item.price * item.quantity)}
                 </div>
               </div>
 
@@ -219,12 +221,9 @@ const ShoppingCart = () => {
                 <div className="flex flex-col space-y-2">
                   <button
                     onClick={() => handleRemoveItem(item.id)}
-                    className="text-gray-400 hover:text-red-600"
+                    className="text-gray-400 hover:text-red-600 transition-colors duration-200"
                   >
                     Xóa
-                  </button>
-                  <button className="text-gray-400 hover:text-red-600 flex items-center justify-center">
-                    <Heart className="w-4 h-4" />
                   </button>
                 </div>
               </div>
@@ -233,84 +232,67 @@ const ShoppingCart = () => {
         ))}
       </div>
 
-      {/* Shipping discount notice */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-        <span className="text-blue-700 text-sm">
-          Giảm ₫15.000 phí vận chuyển đơn tối thiểu 150.000; Giảm ₫25.000 phí
-          vận chuyển đơn tối thiểu ₫99.000
-          <span className="text-blue-500 underline cursor-pointer">
-            {" "}
-            Tìm hiểu thêm
-          </span>
-        </span>
-      </div>
-
-      {/* Voucher section */}
-      <div className="bg-white rounded-lg shadow-sm p-4 mb-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <span className="text-orange-500">🎫</span>
-              <span className="font-medium">Shopee Voucher</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <span className="text-orange-500">💰</span>
-              <span className="font-medium">Shopee Xu</span>
-              <span className="text-sm text-gray-500">
-                Dùng {shopeeXu} Shopee Xu
-              </span>
-              <span className="text-orange-500">ⓘ</span>
-              <span className="text-orange-500 font-medium">-₫{shopeeXu}</span>
-            </div>
-          </div>
-          <button className="bg-orange-500 text-white px-4 py-2 rounded text-sm hover:bg-orange-600">
-            Chọn Nhập Mã
+      {/* Empty cart message */}
+      {cartItems.length === 0 && (
+        <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+          <CartIcon className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-600 mb-2">
+            Giỏ hàng của bạn đang trống
+          </h3>
+          <p className="text-gray-500 mb-4">
+            Hãy thêm sản phẩm vào giỏ hàng để tiếp tục mua sắm
+          </p>
+          <button
+            onClick={handleBackToHome}
+            className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200"
+          >
+            Tiếp tục mua sắm
           </button>
         </div>
-      </div>
+      )}
 
       {/* Bottom actions */}
-      <div className="bg-white rounded-lg shadow-sm p-4 sticky bottom-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-                className="w-4 h-4 text-red-600 rounded"
-              />
-              <span>Chọn Tất Cả ({cartItems.length})</span>
-            </label>
-            <button className="text-gray-500 hover:text-gray-700">Xóa</button>
-            <button className="text-gray-500 hover:text-red-600">
-              Lưu vào mục Đã thích
-            </button>
-          </div>
-
-          <div className="flex items-center space-x-6">
-            <div className="text-right">
-              <div className="text-sm text-gray-500">
-                Tổng thanh toán ({selectedItems.length} Sản phẩm):
-              </div>
-              <div className="text-2xl font-bold text-red-600">
-                ₫{formatPrice(totalAmount)}
-              </div>
-              {totalSavings > 0 && (
-                <div className="text-sm text-green-600">
-                  Tiết kiệm ₫{formatPrice(totalSavings)}
-                </div>
-              )}
+      {cartItems.length > 0 && (
+        <div className="bg-white rounded-lg shadow-sm p-4 sticky bottom-0">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  checked={selectAll}
+                  onChange={handleSelectAll}
+                  className="w-4 h-4 text-red-600 rounded"
+                />
+                <span>Chọn Tất Cả ({cartItems.length})</span>
+              </label>
+              <button className="text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                Xóa
+              </button>
+              <button className="text-gray-500 hover:text-red-600 transition-colors duration-200">
+                Lưu vào mục Đã thích
+              </button>
             </div>
-            <button
-              className="bg-red-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-red-700 disabled:bg-gray-300"
-              disabled={selectedItems.length === 0}
-            >
-              Mua Hàng
-            </button>
+
+            <div className="flex items-center space-x-6">
+              <div className="text-right">
+                <div className="text-sm text-gray-500">
+                  Tổng thanh toán ({selectedItems.length} Sản phẩm):
+                </div>
+                <div className="text-2xl font-bold text-red-600">
+                  ₫{formatPrice(totalAmount)}
+                </div>
+              </div>
+              <button
+                className="bg-red-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-red-700 disabled:bg-gray-300 transition-colors duration-200"
+                disabled={selectedItems.length === 0}
+                onClick={() => alert("Chức năng đặt hàng sẽ được phát triển!")}
+              >
+                Mua Hàng
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
