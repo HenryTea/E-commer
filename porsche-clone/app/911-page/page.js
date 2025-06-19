@@ -1,8 +1,6 @@
 "use client";
 
-// import HeroCarousel from "../components/HeroCarousel";
 import Image from "next/image";
-// import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
 export default function Home() {
@@ -10,9 +8,6 @@ export default function Home() {
     <main className="bg-white text-black">
       {/* Navbar */}
       <Navbar />
-
-      {/* Hero Carousel */}
-      {/* <HeroCarousel /> */}
 
       {/* Section: Giới thiệu Porsche 911 */}
       <section className="py-20 px-4">
@@ -37,10 +32,11 @@ export default function Home() {
               Porsche 911 là biểu tượng huyền thoại của hiệu suất và thiết kế
               vượt thời gian trong thế giới xe thể thao. Ra mắt lần đầu vào năm
               1964, 911 đã không ngừng được cải tiến qua nhiều thế hệ để trở
-              thành một trong những dòng xe thể thao được yêu thích nhất thế giới.
+              thành một trong những dòng xe thể thao được yêu thích nhất thế
+              giới.
             </p>
 
-            <ul className="space-y-3 text-base list-disc list-inside">
+            <ul className="space-y-3 text-base list-disc list-inside mb-6">
               <li>Động cơ 6 xy-lanh boxer đặt sau trứ danh</li>
               <li>Khả năng tăng tốc vượt trội và cảm giác lái chính xác</li>
               <li>Nội thất sang trọng, hiện đại và tùy biến cao</li>
@@ -50,12 +46,22 @@ export default function Home() {
               </li>
               <li>Thiết kế khí động học mang tính biểu tượng</li>
             </ul>
+
+            {/* Giá và nút đặt hàng */}
+            <div className="flex items-center gap-6 mt-6">
+              <span className="text-2xl font-semibold text-red-600">
+                Giá: 8.870.000.000₫
+              </span>
+              <button
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-medium px-4 py-2 rounded-lg shadow-md hover:from-blue-600 hover:to-cyan-600 transform hover:scale-105 transition duration-300 ease-in-out text-sm"
+                onClick={() => alert("Bạn đã chọn đặt hàng Porsche 911!")}
+              >
+                🚗 Đặt hàng ngay
+              </button>
+            </div>
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      {/* <Footer /> */}
     </main>
   );
 }
