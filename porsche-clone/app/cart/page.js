@@ -1,5 +1,5 @@
-import ShoppingCart from '../shoppingCart/shoppingCart';
+import ShoppingCart from '../components/shoppingCart';
 
 export default function CartPage() {
   return <ShoppingCart />;
-} 
+}
