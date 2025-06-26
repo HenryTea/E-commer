@@ -16,7 +16,7 @@ export default function Porsche718() {
   return (
     <div>
       <Navbar />
-      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-10 flex flex-col md:flex-row items-center gap-8">
+      <div className="drop-shadow-[0_35px_35px_rgba(0,0,0,0.25)] max-w-5xl mx-auto bg-white rounded-xl p-8 mt-10 flex flex-col md:flex-row items-center gap-8">
         {/* Car Image and Dimensions */}
         <div className="flex-1 flex flex-col items-center">
           <img
@@ -54,7 +54,7 @@ export default function Porsche718() {
             Giá tiêu chuẩn bao gồm thuế nhập khẩu, thuế tiêu thụ đặc biệt và thuế giá trị gia tăng. Đối với dòng xe Panamera, Cayenne, Macan và Taycan giá tiêu chuẩn bao gồm thêm gói dịch vụ 4 năm bảo dưỡng. Bảng giá, thông số kỹ thuật và hình ảnh có thể thay đổi theo từng thời điểm mà không báo trước.
           </p>
           <button className="mt-6 px-6 py-3 bg-black text-white rounded-lg font-bold hover:bg-gray-800 transition">
-            Tất cả thông số
+            Thêm vào giỏ hàng
           </button>
         </div>
       </div>
